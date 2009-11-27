@@ -27,13 +27,13 @@ The prestaSitemapPlugin is licensed under the MIT License.
 
 In order to register methods and or functions that should add URLs to the sitemap, we should add listeners for the event 'presta_sitemap.generate_urls'.
 
-In apps/<appName>/config/<appName>Configuration.class.php, we declare one or more listeners in configure() method:
+In apps/%appName%/config/%appName%Configuration.class.php, we declare one or more listeners in configure() method:
 
     [php]        
     // 'sitemapUtils' and 'generateSitemapEntries' are just exemple of a valid callback. You can name them as you want.
     $this->dispatcher->connect( 'presta_sitemap.generate_urls', array( 'sitemapUtils', 'generateSitemapEntries' ) );
     
-We add the listener method in a new class (eg:  apps/<appName>/lib/sitemapUtils.class.php ):
+We add the listener method in a new class (eg:  apps/%appName%/lib/sitemapUtils.class.php ):
 
     [php]
     class sitemapUtils
