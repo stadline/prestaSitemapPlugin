@@ -8,7 +8,9 @@
  * file that was distributed with this source code.
  */
 
-
+/**
+ * Test generated sitemap for current project
+ */
 
 include(dirname(__FILE__).'/../bootstrap/functional.php');
 
@@ -21,28 +23,32 @@ prestaSitemapTestUtils::loadHelpers( array('Asset', 'Url' ) );
 // *** Test prestaSitemapPLugin integration process
 // *************
 
-$browser = new sfTestBrowser();
-$browser->test()->diag('prestaSitemapPlugin integration process');
+$browser = new sfTestFunctional(new sfBrowser());
+
+$browser->test()->diag('prestaSitemapPlugin - Test generated sitemap for current project');
 
 // create a new test browser
-$browser->
-	get( 'sitemap.xml' )->
-	isStatusCode(200)->
-	isRequestParameter('module', 'prestaSitemap')->
-	isRequestParameter('action', 'displaySitemapIndex')->
-	responseContains('<sitemapindex')->
-	responseContains('</sitemapindex>');
+$browser->get( 'sitemap.xml' )->
+	with('request')->begin()->
+		isParameter('module', 'prestaSitemap')->
+		isParameter('action', 'displaySitemapIndex')->
+	end()->
+	
+	with('response')->begin()->
+		isStatusCode(200)->
+		checkElement('sitemapindex')->
+	end();
   
 $dom = $browser->getResponseDom();
 foreach( $dom->getElementsByTagName('loc') as $loc )
 {
 	$url	= $loc->firstChild->wholeText;
 	$browser->test()->diag('Test '. $url);
-	$browser->
-  		get( $url )->
-  		isStatusCode(200)->
-		responseContains('<urlset')->
-		responseContains('</urlset>');
+	$browser->get( $url )->
+		with('response')->begin()->
+			isStatusCode(200)->
+			checkElement('urlset')->
+		end();
 		
 	$dom2 = $browser->getResponseDom();
 	$browser->test()->cmp_ok( count( $dom2->getElementsByTagName('url') ), '<', 50000, "There is less than 50000 entries" );

@@ -46,7 +46,7 @@ function _changeActionListener( $sfEvent )
 function _generateUrlsListener( $sfEvent )
 {
 	// Define parameters
-	$miscUrl			= 'http://www.foor.bar?a=1&b=2&a=而在尊&c=Iñtërnâtiônàlizætiøn&amp;d=encoded&e=invalidXml<sdf>#toto';
+	$miscUrl			= 'http://www.foor.bar?a=1&b=2&a=???&c=Iñtërnâtiônàlizætiøn&amp;d=encoded&e=invalidXml<sdf>#toto';
 	$longUrl			= $miscUrl.'thisisaveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylongurl';
 	$o_date				= new DateTime();
 	$priority			= 0.6;
@@ -91,8 +91,8 @@ function _generateUrlsListener( $sfEvent )
 // *************
 
 
+$browser = new sfTestFunctional(new sfBrowser());
 
-$browser = new sfTestBrowser();
 
 $browser->test()->diag('prestaSitemapGenerator process');
 
@@ -101,24 +101,31 @@ $browser->addListener('presta_sitemap.generate_urls', '_generateUrlsListener' );
 
 
 // create a new test browser
-$browser->
-	get( 'sitemap.xml' )->
-	isStatusCode(200)->
-	isRequestParameter('module', 'prestaSitemap')->
-	isRequestParameter('action', 'displaySitemapIndex')->
-	responseContains('<sitemapindex')->
-	responseContains('</sitemapindex>');
+$browser->get( 'sitemap.xml' )->
+
+	with('request')->begin()->
+		isParameter('module', 'prestaSitemap')->
+		isParameter('action', 'displaySitemapIndex')->
+	end()->
+
+	with('response')->begin()->
+		isStatusCode(200)->
+		checkElement('sitemapindex')->
+	end();
+
+	
   
 $dom = $browser->getResponseDom();
 foreach( $dom->getElementsByTagName('loc') as $loc )
 {
 	$url	= $loc->firstChild->wholeText;
 	//$browser->test()->diag('Test '. $url);
-	$browser->
-  		get( $url )->
-  		isStatusCode(200)->
-		responseContains('<urlset')->
-		responseContains('</urlset>');
+	
+	$browser->get( $url )->
+		with('response')->begin()->
+	  		isStatusCode(200)->
+			checkElement('urlset')->
+		end();
 		
 	$dom2 = $browser->getResponseDom();
 	$browser->test()->cmp_ok( count( $dom2->getElementsByTagName('url') ), '<', 50000, "There is less than 50000 entries" );
@@ -132,20 +139,23 @@ foreach( $dom->getElementsByTagName('loc') as $loc )
 }
 
 // non existing seciton will return a 404
-$browser->
-	get( 'sitemap.nonExisting.xml' )->
-	isStatusCode(404);
+$browser->get( 'sitemap.nonExisting.xml' )->
+	with('response')->begin()->
+		isStatusCode(404)->
+	end();
 
 
 sfToolkit::clearDirectory(sfConfig::get('sf_cache_dir'));
 // existing section should regenerate cache datas if cache is empty
-$browser->
-	get( 'sitemap.misc2.xml' )->
-	isStatusCode(200);
+$browser->get( 'sitemap.misc2.xml' )->
+	with('response')->begin()->
+		isStatusCode(200)->
+	end();
 
-// non existing seciton will return a 404
+// non existing section will return a 404
 sfToolkit::clearDirectory(sfConfig::get('sf_cache_dir'));
-$browser->
-	get( 'sitemap.nonExisting.xml' )->
-	isStatusCode(404);
+$browser->get( 'sitemap.nonExisting.xml' )->
+	with('response')->begin()->
+		isStatusCode(404)->
+	end();
 	
