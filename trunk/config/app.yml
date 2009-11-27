@@ -17,3 +17,9 @@ default:
     # define the classes to use
     sitemapGeneratorClassName:  prestaSitemapGenerator
     sitemapUrlClassName:        prestaSitemapUrl
+    
+    # add the ability to customize the class used as cache layer
+    storage:
+      class:          sfFileCache
+      param:
+        automatic_cleaning_factor:   999999  
