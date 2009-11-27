@@ -51,19 +51,24 @@ class prestaSitemapGenerator
 		// *************
 		// *** instanciate internal cache layers
 		// *************
-		
 		$rootCacheDir	= sfConfig::get('app_prestaSitemapPlugin_rootCacheDir') . '/' . $this->getExecutionStringIdentifierFromUrl();
-		
+				
+		// get config from stroage class
+		$storageConfig	= sfConfig::get('app_prestaSitemapPlugin_storage');
+		$storageClass				= array_key_exists( 'class', $storageConfig ) ? $storageConfig['class'] : 'sfFileCache';
+		$storageDefaultParameters	= array_key_exists( 'param', $storageConfig ) ? $storageConfig['param'] : array();
+															
 		// define long term cache as the cache cleanup will be managed by the prestaSitemapGenerator
-		$this->o_internalCache		= new sfFileCache(	array(
-															'cache_dir'	=> $rootCacheDir.'/internal',
-															'lifetime'	=> 60*60*24*365*3
-														) );
-														
-		$this->o_generatedCache		= new sfFileCache(	array(
-															'cache_dir' => $rootCacheDir.'/generated',
-															'lifetime'	=> 60*60*24*365*3
-														) );
+		$this->o_internalCache		= new $storageClass(	array_merge( $storageDefaultParameters, array(
+																'cache_dir'	=> $rootCacheDir.'/internal',
+																'prefix'	=> $rootCacheDir.'/internal',
+																'lifetime'	=> 60*60*24*365*3
+															) ) );
+		$this->o_generatedCache		= new $storageClass(	array_merge( $storageDefaultParameters, array(
+																'cache_dir' => $rootCacheDir.'/generated',
+																'prefix' 	=> $rootCacheDir.'/generated',
+																'lifetime'	=> 60*60*24*365*3
+															) ) );
 		// *************
 		
 														
