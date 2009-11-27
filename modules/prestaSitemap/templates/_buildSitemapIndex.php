@@ -1,4 +1,10 @@
-<?php $lastModDate	= date('c'); ?>
+<?php
+	// fix data that could have been changed due to output escaping strategy
+	$a_errorMessages	= $sf_data->getRaw( 'a_errorMessages' );
+	$a_mapNames			= $sf_data->getRaw( 'a_mapNames' );
+	// compute only once the current date
+	$lastModDate		= date('c');
+?>
 <?php echo '<?xml version="1.0" encoding="UTF-8"?>'."\n" ?>
 <sitemapindex
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
