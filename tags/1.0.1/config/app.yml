@@ -1,0 +1,25 @@
+default:
+  prestaSitemapPlugin:
+    # define default cache parameters
+    mainCache:
+      enabled:        true
+      lifetime:       3600
+      
+    sectionCache:
+      enabled:        true
+      lifetime:       86400
+      
+    maxEntryCountByFile:  49999     # define the maximum number of entries for a sitemap file
+    maxFileSize:          10485760  # define the maximum number of entries for a sitemap file
+    
+    rootCacheDir:         %sf_cache_dir%/prestaSitemapPlugin          # define the root cache directory
+
+    # define the classes to use
+    sitemapGeneratorClassName:  prestaSitemapGenerator
+    sitemapUrlClassName:        prestaSitemapUrl
+    
+    # add the ability to customize the class used as cache layer
+    storage:
+      class:          sfFileCache
+      param:
+        automatic_cleaning_factor:   999999  
