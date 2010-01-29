@@ -99,6 +99,20 @@ Features:
 			</stability>
 			<date>2010-01-29</date>
 			<notes>
+* Remove code used for compatibility with sf1.1 (sfLoader) that is not used (as this plugin doesn't officially support symfony 1.1) that were producing notices with project:validate
+	        </notes>
+		</release> 
+		<release>
+			<version>
+				<release>1.0.2</release>
+				<api>1.0.1</api>
+			</version>
+			<stability>
+				<release>stable</release>
+				<api>stable</api>
+			</stability>
+			<date>2010-01-29</date>
+			<notes>
 				Remove code used for compatibility with sf1.1 (sfLoader) that is not used (as this plugin doesn't officially support symfony 1.1) that were producing notices with project:validate
 	        </notes>
 		</release> 
