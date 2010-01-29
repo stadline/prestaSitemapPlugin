@@ -1,0 +1,1 @@
+Remove code used for compatibility with sf1.1 (sfLoader) that is not used (as this plugin doesn't officially support symfony 1.1) that were producing notices with project:validate
