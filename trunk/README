@@ -208,6 +208,11 @@ Here is a little example about prestaSitemapSection
     
 ## Changelog
 
+### 2010-01-29 | 1.0.2
+
+  * Remove code used for compatibility with sf1.1 (sfLoader) that is not used (as this plugin doesn't officially support symfony 1.1) that were producing notices with project:validate
+
+
 ### 2009-11-27 | 1.0.1
 
   * Add compatibility with symfony 1.3 & 1.4

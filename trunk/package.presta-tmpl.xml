@@ -30,44 +30,21 @@ Features:
 		<email>mrandy@prestaconcept.net</email>
 		<active>yes</active>
 	</lead>
-	<date>2010-01-29</date>
+	<date>##CURRENT_DATE##</date>
 	<version>
-		<release>1.0.2</release>
-		<api>1.0.1</api>
+		<release>##PLUGIN_VERSION##</release>
+		<api>##API_VERSION##</api>
 	</version>
 	<stability>
-		<release>stable</release>
-		<api>stable</api>
+		<release>##STABILITY##</release>
+		<api>##STABILITY##</api>
 	</stability>
 	<license uri="http://www.symfony-project.org/license">
 		MIT license
 	</license>
 	<notes>-</notes>
 	<contents>
-		<dir name="/">
-			<file role="data" name="LICENSE" />
-			<file role="data" name="README" />
-			<file role="data" name="config/app.yml" />
-			<file role="data" name="config/config.php" />
-			<file role="data" name="lib/prestaSitemapGenerator.class.php" />
-			<file role="data" name="lib/prestaSitemapRouting.class.php" />
-			<file role="data" name="lib/prestaSitemapSection.class.php" />
-			<file role="data" name="lib/prestaSitemapUrl.class.php" />
-			<file role="data" name="modules/prestaSitemap/actions/actions.class.php" />
-			<file role="data" name="modules/prestaSitemap/config/cache.yml" />
-			<file role="data" name="modules/prestaSitemap/config/security.yml" />
-			<file role="data" name="modules/prestaSitemap/config/view.yml" />
-			<file role="data" name="modules/prestaSitemap/templates/_buildSitemap.php" />
-			<file role="data" name="modules/prestaSitemap/templates/_buildSitemapIndex.php" />
-			<file role="data" name="modules/prestaSitemap/templates/displaySitemapIndexSuccess.php" />
-			<file role="data" name="modules/prestaSitemap/templates/displaySitemapSuccess.php" />
-			<file role="data" name="test/bootstrap/functional.php" />
-			<file role="data" name="test/bootstrap/unit.php" />
-			<file role="data" name="test/functional/prestaSitemapGeneratorTest.php" />
-			<file role="data" name="test/functional/prestaSitemapIntegrationTest.php" />
-			<file role="data" name="test/lib/prestaSitemapTestUtils.class.php" />
-			<file role="data" name="test/unit/prestaSitemapUrlTest.php" />
-		</dir>
+##CONTENTS##
 	</contents>
 	<dependencies>
 		<required>
@@ -88,6 +65,7 @@ Features:
 	</dependencies>
 	<phprelease />
 	<changelog>
+##NEW_RELEASE##
 		<release>
 			<version>
 				<release>1.0.2</release>
