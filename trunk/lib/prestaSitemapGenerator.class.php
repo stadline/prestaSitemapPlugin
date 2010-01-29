@@ -39,14 +39,8 @@ class prestaSitemapGenerator
 	public function __construct()
 	{
 		// load helper as we'll use partial rendering and probably url_for methods
-		if( method_exists( sfContext::getInstance()->getConfiguration(), 'loadHelpers' ) )
-		{
-			sfContext::getInstance()->getConfiguration()->loadHelpers( array( 'Partial', 'Url' ) );
-		}
-		else
-		{
-			sfLoader::loadHelpers( array( 'Partial', 'Url' ) );
-		}
+		sfContext::getInstance()->getConfiguration()->loadHelpers( array( 'Partial', 'Url' ) );
+		
 		
 		// *************
 		// *** instanciate internal cache layers
