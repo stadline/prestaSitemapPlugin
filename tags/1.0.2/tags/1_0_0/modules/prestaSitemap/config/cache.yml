@@ -1,3 +1,0 @@
-# disable synfony's view cache
-all:
-  enabled:      off
