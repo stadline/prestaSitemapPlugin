@@ -23,7 +23,7 @@ class prestaSitemapUrlImage
 		$caption,				// alt
 		$geo_location,
 		$title,
-		$licence;
+		$license;
 
 		
 	/**
@@ -36,16 +36,16 @@ class prestaSitemapUrlImage
 	 * @param 	String $caption[optional]
 	 * @param 	String $geo_location[optional]
 	 * @param 	String $title[optional]
-	 * @param 	String $licence[optional]
+	 * @param 	String $license[optional]
 	 */
-	public function __construct( $location = null, $caption = null, $geo_location = null, $title = null, $licence = null )
+	public function __construct( $location = null, $caption = null, $geo_location = null, $title = null, $license = null )
 	{
 		// use a callback for the location as $location can be an array of parameters
 		$this->setLocation( $location );
 		$this->setCaption( $caption );
 		$this->setGeoLocation( $geo_location );
 		$this->setTitle( $title );
-		$this->setLicence( $licence );
+		$this->setLicense( $license );
 	}
 	
 	
@@ -251,7 +251,7 @@ class prestaSitemapUrlImage
 	 * @param 	String $license
 	 * @return 	prestaSitemapUrlImage
 	 */
-	public function setLicence( $license )
+	public function setLicense( $license )
 	{
 		$this->license = self::toValidUtf8LocationContent($license);
 		
@@ -267,7 +267,7 @@ class prestaSitemapUrlImage
 	 * @since	5 oct. 2010 - Alain Flaus <aflaus@prestaconcept.net>
 	 * @return 	String
 	 */
-	public function getLicence()
+	public function getLicense()
 	{
 		return $this->license;
 	}
@@ -296,8 +296,8 @@ class prestaSitemapUrlImage
 	<?php if( !is_null( $this->getTitle() ) ): ?>
 		<image:title><?php echo $this->getTitle() ?></image:title>
 	<?php endif; ?>
-	<?php if( !is_null( $this->getLicence() ) ): ?>
-		<image:license><?php echo $this->getLicence() ?></image:license>
+	<?php if( !is_null( $this->getLicense() ) ): ?>
+		<image:license><?php echo $this->getLicense() ?></image:license>
 	<?php endif; ?>
 	</image:image>
 <?php
