@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the prestaSitemaplugin package.
- * (c) Chriistophe Dolivet <cdolivet@prestaconcept.net>
+ * (c) Christophe Dolivet <cdolivet@prestaconcept.net>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -226,7 +226,7 @@ class prestaSitemapSection
 	 * 
 	 * @author  Christophe Dolivet
 	 * @since   1.0 - 22 juil. 2009 - Christophe Dolivet
-	 * @version 1.0 - 22 juil. 2009 - Christophe Dolivet
+	 * @version 1.1 - 5 oct. 2010 - Alain Flaus <aflaus@prestaconcept.net>
 	 */
 	public function deleteEmptyUrls()
 	{
@@ -236,6 +236,10 @@ class prestaSitemapSection
 			{
 				unset( $this->a_o_sitemapUrls[ $key ] );
 				unset( $o_sitemapUrl );
+			}
+			else
+			{
+				$o_sitemapUrl->deleteEmptyUrls();
 			}
 		}
 	}

@@ -15,7 +15,7 @@ require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 prestaSitemapTestUtils::createContextInstance();
 prestaSitemapTestUtils::loadHelpers( array('Asset', 'Url' ) );
 
-$t = new lime_test(14, new lime_output_color());
+$t = new lime_test(18, new lime_output_color());
 
 // Define parameters
 $miscUrl			= 'http://www.foor.bar?a=1&b=2&a=而在尊&c=Iñtërnâtiônàlizætiøn&amp;d=encoded&e=invalidXml<sdf>#toto';
@@ -83,3 +83,38 @@ $t->cmp_ok( $o_prestaSitemapUrl1->toXML(), '==', $o_prestaSitemapUrl2->toXml(), 
 $o_prestaSitemapUrl1	= new prestaSitemapUrl();
 $o_prestaSitemapUrl1->fromArray( $o_prestaSitemapUrl2->toArray() );
 $t->cmp_ok( $o_prestaSitemapUrl1->toXML(), '==', $o_prestaSitemapUrl2->toXml(), 'fromArray() and toArray() methods allow to exports/import datas without anychange');
+
+$t->diag('6 - Images');
+
+$o_prestaSitemapUrl1		= new prestaSitemapUrl();
+$o_prestaSitemapUrlImage1	= new prestaSitemapUrlImage( 'img_test.png', 'alt_1', 'geo_location_1', 'title_1', 'licence_1' );
+$o_prestaSitemapUrlImage2	= new prestaSitemapUrlImage( null, 'alt_2', 'geo_location_2', 'title_2', 'licence_2' );
+$o_prestaSitemapUrlImage3	= new prestaSitemapUrlImage( 'img_test.png', null, null, null, null );
+
+$o_prestaSitemapUrl1->addImage($o_prestaSitemapUrlImage1);
+$o_prestaSitemapUrl1->addImage($o_prestaSitemapUrlImage2);
+$o_prestaSitemapUrl1->addImage($o_prestaSitemapUrlImage3);
+
+$t->is( count($o_prestaSitemapUrl1->getImages()), 3, "Image successfull associated" );
+
+$test = true;
+foreach( $o_prestaSitemapUrl1->getImages() as $o_prestaSitemapUrlImage )
+{
+	if( ! $o_prestaSitemapUrlImage instanceof prestaSitemapUrlImage )
+	{
+		$test = false;
+	}
+}
+$t->ok( $test, "Image successfull returned" );
+
+$o_prestaSitemapUrl1->deleteEmptyUrls();
+
+$t->is( count($o_prestaSitemapUrl1->getImages()), 2, "Image with empty url successfull deleted" );
+
+
+for( $i = 0; $i <= sfConfig::get('app_prestaSitemapPlugin_maxImagePerPage') + 1  ; $i++ )
+{
+	$o_prestaSitemapUrl1->addImage($o_prestaSitemapUrlImage1);
+}
+
+$t->cmp_ok( count($o_prestaSitemapUrl1->getImages()), '>', sfConfig::get('app_prestaSitemapPlugin_maxImagePerPage'), 'Limit of ' . sfConfig::get('app_prestaSitemapPlugin_maxImagePerPage') . ' image per page successfully respected');

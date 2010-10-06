@@ -1,8 +1,8 @@
 <?php
 
 /*
- * This file is part of the prestaSitemaplugin package.
- * (c) Chriistophe Dolivet <cdolivet@prestaconcept.net>
+ * This file is part of the prestaSitemaPlugin package.
+ * (c) Christophe Dolivet <cdolivet@prestaconcept.net>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,14 +23,16 @@ class prestaSitemapUrl
 	const CHANGE_FREQUENCY_WEEKLY	= 'weekly';
 	const CHANGE_FREQUENCY_MONTHLY	= 'monthly';
 	const CHANGE_FREQUENCY_YEARLY	= 'yearly';
-	const CHANGE_FREQUENCY_NEVER	= 'never'; 
+	const CHANGE_FREQUENCY_NEVER	= 'never';
+	const MAX_IMAGES_PER_PAGE		= 1000;
 	
 	
 	protected
-		$location,				// absolute url
-		$lastModificationDate,	// last modifcaiotn date
-		$changeFrequency,		// change frequency
-		$priority; 				// priority
+		$location,								// absolute url
+		$lastModificationDate,					// last modifcaiotn date
+		$changeFrequency,						// change frequency
+		$priority, 								// priority
+		$a_o_sitemapUrlImages = array();		// array of prestaSitemapUrlImage
 		
 	/**
 	 * Construct a new prestaSitemapUrl mainly identified by it's url
@@ -283,15 +285,17 @@ class prestaSitemapUrl
 	
 	
 	/**
-	 * Return the xml content of this object
+	 * Return the xml content of this object and associated prestaSitemapUrlImages
 	 * 
 	 * @author  Christophe Dolivet
 	 * @since   1.0 - 24 juil. 2009 - Christophe Dolivet
-	 * @version 1.0 - 24 juil. 2009 - Christophe Dolivet
-	 * @return String
+	 * @version 1.1 - 5 oct. 2010 - Alain Flaus <aflaus@prestaconcept.net>
+	 * @return 	String
 	 */
 	public function toXML()
 	{
+		$nb_image = 0;
+		
 		ob_start();
 ?>
 	<url>
@@ -304,6 +308,15 @@ class prestaSitemapUrl
 	<?php endif; ?>
 	<?php if( !is_null( $this->getPriority() ) ): ?>
 		<priority><?php echo $this->getPriority() ?></priority>
+	<?php endif; ?>
+	<?php if( count($this->a_o_sitemapUrlImages) != 0 ): ?>
+		<?php foreach( $this->a_o_sitemapUrlImages as $prestaSitemapUrlImage ): ?>
+			<?php if( $nb_image <= sfConfig::get('app_prestaSitemapPlugin_maxImagePerPage') ): ?>
+				<?php echo $prestaSitemapUrlImage->toXML() ?>
+			<?php else: ?>
+				<?php exit();?>
+			<?php endif; ?>
+		<?php endforeach; ?>
 	<?php endif; ?>
 	</url>
 <?php
@@ -336,5 +349,67 @@ class prestaSitemapUrl
 			}
 		}
 		return $string;
+	}
+	
+	
+	/**
+	 * add a prestaSitemapUrlImage to the current prestaSitemapUrl
+	 * 
+	 * @author	Alain Flaus <aflaus@prestaconcept.net>
+	 * @version	1.0 - 5 oct. 2010 - Alain Flaus <aflaus@prestaconcept.net>
+	 * @since	5 oct. 2010 - Alain Flaus <aflaus@prestaconcept.net>
+	 * @param 	prestaSitemapUrlImage $prestaSitemapUrlImage
+	 * @return 	prestaSitemapUrl
+	 */
+	public function addImage( prestaSitemapUrlImage $prestaSitemapUrlImage )
+	{
+		// if nb associated image > maxImagePerPage stop association
+		if( count($this->getImages()) <= sfConfig::get('app_prestaSitemapPlugin_maxImagePerPage') )
+		{
+			$this->a_o_sitemapUrlImages[] = $prestaSitemapUrlImage;
+		}
+		
+		return $this;
+	}
+	
+	
+	/**
+	 * Delete image by his index
+	 * 
+	 * @author	Alain Flaus <aflaus@prestaconcept.net>
+	 * @version	1.0 - 5 oct. 2010 - Alain Flaus <aflaus@prestaconcept.net>
+	 * @since	5 oct. 2010 - Alain Flaus <aflaus@prestaconcept.net>
+	 * @param 	$index
+	 * @return 	prestaSitemapUrl
+	 */
+	public function deleteEmptyUrls()
+	{
+		// check image location validity
+		if( count($this->getImages()) != 0 )
+		{
+			foreach( $this->getImages() as $key => $sitemapUrlImage )
+			{
+				// if location is empty unset value
+				if( is_null( $sitemapUrlImage->getLocation() ) )
+				{
+					unset( $this->a_o_sitemapUrlImages[$key] );
+					unset( $o_sitemapUrlImage );
+				}
+			}
+		}
+	}
+	
+	
+	/**
+	 * return the sitemapUrlImages associated to the current sitemapUrl
+	 * 
+	 * @author	Alain Flaus <aflaus@prestaconcept.net>
+	 * @version	1.0 - 5 oct. 2010 - Alain Flaus <aflaus@prestaconcept.net>
+	 * @since	5 oct. 2010 - Alain Flaus <aflaus@prestaconcept.net>
+	 * @return 	array of prestaSitemapUrlImages
+	 */
+	public function getImages()
+	{
+		return $this->a_o_sitemapUrlImages;
 	}
 }

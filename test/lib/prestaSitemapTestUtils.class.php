@@ -34,7 +34,7 @@ class prestaSitemapTestUtils
 	public static function loadHelpers( $datas )
 	{
 		// load helper as we'll use partial rendering and probably url_for methods
-		sfContext::getInstance()->getConfiguration()->loadHelpers( array( 'Partial', 'Url' ) );
+		sfContext::getInstance()->getConfiguration()->loadHelpers( array( 'Asset', 'Partial', 'Url' ) );
 	}
 	
 	public static function urlXmlContentToXML( $xml )

@@ -10,7 +10,8 @@ default:
       lifetime:       86400
       
     maxEntryCountByFile:  49999     # define the maximum number of entries for a sitemap file
-    maxFileSize:          10485760  # define the maximum number of entries for a sitemap file
+    maxFileSize:          10485760  # define the maximum size for a sitemap file
+    maxImagePerPage:      9999      # define the maximum number of image entries for a sitemap url
     
     rootCacheDir:         %sf_cache_dir%/prestaSitemapPlugin          # define the root cache directory
 
