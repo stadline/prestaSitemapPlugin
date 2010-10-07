@@ -30,10 +30,10 @@ Features:
 		<email>mrandy@prestaconcept.net</email>
 		<active>yes</active>
 	</lead>
-	<date>2010-01-29</date>
+	<date>2010-10-07</date>
 	<version>
-		<release>1.0.2</release>
-		<api>1.0.1</api>
+		<release>1.0.3</release>
+		<api>1.0.3</api>
 	</version>
 	<stability>
 		<release>stable</release>
@@ -53,6 +53,7 @@ Features:
 			<file role="data" name="lib/prestaSitemapRouting.class.php" />
 			<file role="data" name="lib/prestaSitemapSection.class.php" />
 			<file role="data" name="lib/prestaSitemapUrl.class.php" />
+			<file role="data" name="lib/prestaSitemapUrlImage.class.php" />
 			<file role="data" name="modules/prestaSitemap/actions/actions.class.php" />
 			<file role="data" name="modules/prestaSitemap/config/cache.yml" />
 			<file role="data" name="modules/prestaSitemap/config/security.yml" />
@@ -66,6 +67,7 @@ Features:
 			<file role="data" name="test/functional/prestaSitemapGeneratorTest.php" />
 			<file role="data" name="test/functional/prestaSitemapIntegrationTest.php" />
 			<file role="data" name="test/lib/prestaSitemapTestUtils.class.php" />
+			<file role="data" name="test/unit/prestaSitemapUrlImageTest.php" />
 			<file role="data" name="test/unit/prestaSitemapUrlTest.php" />
 		</dir>
 	</contents>
@@ -88,6 +90,20 @@ Features:
 	</dependencies>
 	<phprelease />
 	<changelog>
+		<release>
+			<version>
+				<release>1.0.3</release>
+				<api>1.0.3</api>
+			</version>
+			<stability>
+				<release>stable</release>
+				<api>stable</api>
+			</stability>
+			<date>2010-10-07</date>
+			<notes>
+* Add the ability to index images in the sitemap as allowed by Google's image extensions for Sitemaps. (See: http://www.google.com/support/webmasters/bin/answer.py?hl=en&amp;answer=178636)
+	        </notes>
+		</release> 
 		<release>
 			<version>
 				<release>1.0.2</release>
