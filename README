@@ -10,6 +10,7 @@ The prestaSitemapPlugin provides an easy way to generate a sitemap.xml.
   * Works with more than 50.000 urls (usage of sitemap index)
   * Manage file limit of 10Mo
   * Multi-domain support (http://fr.foo.bar/sitemap.xml and http://en.foo.bar/sitemap.xml may produce different sitemap contents)
+  * Support Google's image extensions for Sitemaps
 
 ## License
 
@@ -130,12 +131,68 @@ So the 2 examples below will produce the same results
     $o_prestaSitemapUrl1	= new prestaSitemapUrl( $miscUrl, $o_date, $changeFrequency, $priority );
     $o_prestaSitemapUrl2	= new prestaSitemapUrl();
     $o_prestaSitemapUrl2->
-   	  setLocation( $miscUrl )->
+      setLocation( $miscUrl )->
       setLastModificationDate( $o_date )->
       setChangeFrequency( $changeFrequency )->
       setPriority( $priority );
 
+### Extension to prestaSitemapUrl
 
+It is possible to add extra datas to prestaSitemapUrl in order to provid more informaiton about one url in the generated sitemap.
+
+#### prestaSitemapUrlImage
+
+prestaSitemapUrlImage object allow to implement Google's image extensions for Sitemaps. This allow to list the images currently present in you web page and to describe metadata about them.
+
+    
+Use the presteSitemapUrl method addImage() to add one prestaSitemapUrlImage. Currently only 1000 images can be added to one single url tag (can be reconfigured in yml).
+        
+Exemple:
+
+	[php]
+	$o_prestaSitemapUrl1		= new prestaSitemapUrl( $miscUrl, $o_date, $changeFrequency, $priority );
+	$o_prestaSitemapUrlImage1	= new prestaSitemapUrlImage( $miscUrl, $caption, $geo_location, $title, $license);
+	$o_prestaSitemapUrl1->addImage( $o_prestaSitemapUrlImage1 );
+
+
+A prestaSitemapUrlImage object expect 5 parameters that can be passed to the constructor or defined using setters methods:
+
+  * The image path. This is the only parameter that should be defined in order to see it appears in the sitemap.xml
+  
+    Constructor's 1st parameter or defined by ->setLocation().
+    
+    This can be a name or an absolute path. It will use image_path().
+    
+    If you specificly need to use url_for() for a dynamic image methods you can use setLocationUrlFor()
+    
+  * A caption [optionnal]. Corresponding to the alt attribute.
+  
+    Constructor's 2nd parameter or defined by ->setCaption().
+    
+  * A geolocation [optionnal].
+  
+    Constructor's 3rd parameter or defined by ->setGeoLocation(). 
+    
+  * A title [optionnal]. Corresponding to the title attribute.
+  
+    Constructor's 4th parameter or defined by ->setTitle(). 
+    
+  * A license [optionnal]. An URL to the license of the image.
+  
+    Constructor's 5th parameter or defined by ->setLicense().
+    
+So the 2 examples below will produce the same results
+
+    [php]
+    $o_prestaSitemapUrlImage1	= new prestaSitemapUrlImage( $miscUrl, $caption, $geo_location, $title, $license);
+    $o_prestaSitemapUrlImage2	= new prestaSitemapUrlImage();
+    $o_prestaSitemapUrlImage2->
+      setLocation( $miscUrl )->
+      setCaption( $caption )->
+      setGeoLocation( $geo_location )->
+      setTitle( $title )->
+      setLicense( $license );
+      
 ## Caching
 
 There si 2 cache levels: a generated xml file cache and a prestaSitemapSection cache
@@ -224,7 +281,7 @@ Here is a little example about prestaSitemapSection
 ### 2009-08-21 | 1.0.0
 
   * Ensure that HTTP header 'Content-Type' indicate charset UTF-8
-  * This plugin has been tested in production environement with success, so it comes out to stable version 1.0 
+  * This plugin has been tested in production environment with success, so it comes out to stable version 1.0 
 
 ### 2009-08-07 | 0.0.4-beta
 

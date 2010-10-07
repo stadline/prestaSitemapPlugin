@@ -22,7 +22,7 @@ $img_name		= 'img_test.png';
 $caption 		= 'alt';
 $geo_location	= 'geo_location';
 $title 			= 'title';
-$licence 		= 'licence';
+$license 		= 'license';
 $miscUrl 		= 'http://www.foor.bar?a=1&b=2&a=而在尊&c=Iñtërnâtiônàlizætiøn&amp;d=encoded&e=invalidXml<sdf>#toto';
 
 // *************
@@ -51,7 +51,7 @@ $t->is( $o_prestaSitemapUrlImage->getLocation(), null, 'Refuse url >= 2048 chara
 
 
 $t->diag('2 setter and getter');
-$o_prestaSitemapUrlImage->setCaption($caption)->setGeoLocation($geo_location)->setTitle($title)->setLicence($licence);
+$o_prestaSitemapUrlImage->setCaption($caption)->setGeoLocation($geo_location)->setTitle($title)->setLicense($license);
 
 $t->diag('2.1 - getCaption()');
 $t->is( $o_prestaSitemapUrlImage->getCaption(), $caption, 'Caption setter and getter correctly work');
@@ -62,14 +62,14 @@ $t->is( $o_prestaSitemapUrlImage->getGeoLocation(), $geo_location, 'Geo location
 $t->diag('2.3 - getTitle()');
 $t->is( $o_prestaSitemapUrlImage->getTitle(), $title, 'Title setter and getter correctly work');
 
-$t->diag('2.4 - getLicence()');
-$t->is( $o_prestaSitemapUrlImage->getLicence(), $licence, 'Licence setter and getter correctly work');
+$t->diag('2.4 - getLicense()');
+$t->is( $o_prestaSitemapUrlImage->getLicense(), $license, 'License setter and getter correctly work');
 
 
 $t->diag('3 - Misc');
-$o_prestaSitemapUrlImage1	= new prestaSitemapUrlImage( $miscUrl, 'alt', 'geo_location', 'title', 'licence' );
+$o_prestaSitemapUrlImage1	= new prestaSitemapUrlImage( $miscUrl, 'alt', 'geo_location', 'title', 'license' );
 $o_prestaSitemapUrlImage2	= new prestaSitemapUrlImage();
-$o_prestaSitemapUrlImage2->setLocation( $miscUrl )->setCaption( 'alt' )->setGeoLocation( 'geo_location' )->setTitle( 'title' )->setLicence( 'licence' );
+$o_prestaSitemapUrlImage2->setLocation( $miscUrl )->setCaption( 'alt' )->setGeoLocation( 'geo_location' )->setTitle( 'title' )->setLicense( 'license' );
 $t->cmp_ok( $o_prestaSitemapUrlImage1->toXML(), '==', $o_prestaSitemapUrlImage2->toXml(), 'Defining parameters to constructor or through setter produce same xml');
 
 $o_prestaSitemapUrlImage1	= new prestaSitemapUrlImage();

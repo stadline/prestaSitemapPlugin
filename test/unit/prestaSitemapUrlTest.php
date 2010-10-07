@@ -87,8 +87,8 @@ $t->cmp_ok( $o_prestaSitemapUrl1->toXML(), '==', $o_prestaSitemapUrl2->toXml(), 
 $t->diag('6 - Images');
 
 $o_prestaSitemapUrl1		= new prestaSitemapUrl();
-$o_prestaSitemapUrlImage1	= new prestaSitemapUrlImage( 'img_test.png', 'alt_1', 'geo_location_1', 'title_1', 'licence_1' );
-$o_prestaSitemapUrlImage2	= new prestaSitemapUrlImage( null, 'alt_2', 'geo_location_2', 'title_2', 'licence_2' );
+$o_prestaSitemapUrlImage1	= new prestaSitemapUrlImage( 'img_test.png', 'alt_1', 'geo_location_1', 'title_1', 'license_1' );
+$o_prestaSitemapUrlImage2	= new prestaSitemapUrlImage( null, 'alt_2', 'geo_location_2', 'title_2', 'license_2' );
 $o_prestaSitemapUrlImage3	= new prestaSitemapUrlImage( 'img_test.png', null, null, null, null );
 
 $o_prestaSitemapUrl1->addImage($o_prestaSitemapUrlImage1);
