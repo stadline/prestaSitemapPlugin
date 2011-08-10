@@ -10,7 +10,7 @@ The prestaSitemapPlugin provides an easy way to generate a sitemap.xml.
   * Works with more than 50.000 urls (usage of sitemap index)
   * Manage file limit of 10Mo
   * Multi-domain support (http://fr.foo.bar/sitemap.xml and http://en.foo.bar/sitemap.xml may produce different sitemap contents)
-  * Support Google's image extensions for Sitemaps
+  * Support Google's image and mobile extensions for sitemaps
 
 ## License
 
@@ -139,6 +139,16 @@ So the 2 examples below will produce the same results
 ### Extension to prestaSitemapUrl
 
 It is possible to add extra datas to prestaSitemapUrl in order to provid more informaiton about one url in the generated sitemap.
+
+#### Extension for mobile website
+
+You can use an option to generate a sitemap for mobile website. When the prestaSitemapUrl class is instanciated you can call the setMobile method with a boolean param. If you pass true, the plugin will generate a sitemap for a mobile website, with a specific tag : '<mobile:mobile/>'. If you don't call the method or if you pass false, the plugin will generate the traditionnal sitemap.
+
+	[php]
+    $o_prestaSitemapUrl1	= new prestaSitemapUrl( $miscUrl, $o_date, $changeFrequency, $priority );
+    o_prestaSitemapUrl1->setMobile( true );
+
+Setting this parameter to true is mandatory if you want google to know that this is a mobile URL.
 
 #### prestaSitemapUrlImage
 

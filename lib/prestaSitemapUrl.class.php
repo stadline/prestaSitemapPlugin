@@ -41,7 +41,8 @@ class prestaSitemapUrl
 		$lastModificationDate,					// last modifcaiotn date
 		$changeFrequency,						// change frequency
 		$priority, 								// priority
-		$a_o_sitemapUrlImages = array();		// array of prestaSitemapUrlImage
+		$a_o_sitemapUrlImages = array(),		// array of prestaSitemapUrlImage
+		$isMobile = false;						// is mobile or not (default : not)
 		
 	/**
 	 * Construct a new prestaSitemapUrl mainly identified by it's url
@@ -296,9 +297,11 @@ class prestaSitemapUrl
 	/**
 	 * Return the xml content of this object and associated prestaSitemapUrlImages
 	 * 
+	 * Add the mobile test
+	 * 
 	 * @author  Christophe Dolivet
 	 * @since   1.0 - 24 juil. 2009 - Christophe Dolivet
-	 * @version 1.1 - 5 oct. 2010 - Alain Flaus <aflaus@prestaconcept.net>
+	 * @version 1.2 - 12 juil. 2011 - Matthieu Crinquand <mcrinquand@prestaconcept.net>
 	 * @return 	String
 	 */
 	public function toXML()
@@ -327,8 +330,12 @@ class prestaSitemapUrl
 			<?php endif; ?>
 		<?php endforeach; ?>
 	<?php endif; ?>
+	<?php //si on est en mobile on ajoute la balise ?>
+	<?php if( $this->isMobile ):?>
+		<mobile:mobile/>
+	<?php endif;?>
 	</url>
-<?php
+<?php 
 		return ob_get_clean();
 	}
 	
@@ -420,5 +427,20 @@ class prestaSitemapUrl
 	public function getImages()
 	{
 		return $this->a_o_sitemapUrlImages;
+	}
+	
+	/**
+	 * set if it's a sitemap mobile
+	 * 
+	 * @author	Matthieu Crinquand <mcrinquand@prestaconcept.net>
+	 * @version	1.0 - 12 juil. 2011 - Matthieu Crinquand <mcrinquand@prestaconcept.net>
+	 * @since	12 juil. 2011 - Matthieu Crinquand <mcrinquand@prestaconcept.net>
+	 * @param 	boolean $mobile
+	 * @return  prestaSitemapUrl
+	 */
+	public function setMobile( $mobile )
+	{
+		$this->isMobile = $mobile;
+		return $this;
 	}
 }

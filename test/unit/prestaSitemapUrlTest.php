@@ -24,7 +24,7 @@ require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 prestaSitemapTestUtils::createContextInstance();
 prestaSitemapTestUtils::loadHelpers( array('Asset', 'Url' ) );
 
-$t = new lime_test(18, new lime_output_color());
+$t = new lime_test(20, new lime_output_color());
 
 // Define parameters
 $miscUrl			= 'http://www.foor.bar?a=1&b=2&a=而在尊&c=Iñtërnâtiônàlizætiøn&amp;d=encoded&e=invalidXml<sdf>#toto';
@@ -127,3 +127,13 @@ for( $i = 0; $i <= sfConfig::get('app_prestaSitemapPlugin_maxImagePerPage') + 1 
 }
 
 $t->cmp_ok( count($o_prestaSitemapUrl1->getImages()), '>', sfConfig::get('app_prestaSitemapPlugin_maxImagePerPage'), 'Limit of ' . sfConfig::get('app_prestaSitemapPlugin_maxImagePerPage') . ' image per page successfully respected');
+
+// test les retours pour les versions mobiles : doit contenir <mobile:mobile/>
+$t->diag('7 - Test version mobile');
+
+$o_prestaSitemapUrl = new prestaSitemapUrl();
+$o_prestaSitemapUrl->setMobile( true );
+$t->like( $o_prestaSitemapUrl->toXML(), '<mobile:mobile/>', "<mobile:mobile/> is present when it's mobile" );
+
+$o_prestaSitemapUrl = new prestaSitemapUrl();
+$t->unlike( $o_prestaSitemapUrl->toXML(), '<mobile:mobile/>', "<mobile:mobile/> isn't present when it's not mobile" );
