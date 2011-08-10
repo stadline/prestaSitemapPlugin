@@ -275,6 +275,11 @@ Here is a little example about prestaSitemapSection
     
 ## Changelog
 
+### 2011-08-10 | 1.0.4
+
+Add support for google's mobile extension for sitemaps
+
+
 ### 2010-10-07 | 1.0.3
 
   * Add the ability to index images in the sitemap as allowed by Google's image extensions for Sitemaps. (See: http://www.google.com/support/webmasters/bin/answer.py?hl=en&answer=178636)

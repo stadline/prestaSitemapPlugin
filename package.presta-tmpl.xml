@@ -68,6 +68,20 @@ Features:
 ##NEW_RELEASE##
 		<release>
 			<version>
+				<release>1.0.4</release>
+				<api>1.0.4</api>
+			</version>
+			<stability>
+				<release>stable</release>
+				<api>stable</api>
+			</stability>
+			<date>2011-08-10</date>
+			<notes>
+Add support for google's mobile extension for sitemaps
+	        </notes>
+		</release> 
+		<release>
+			<version>
 				<release>1.0.3</release>
 				<api>1.0.3</api>
 			</version>
